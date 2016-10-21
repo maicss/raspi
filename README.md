@@ -1,1 +1,3 @@
 # raspi
+
+- add ip mail

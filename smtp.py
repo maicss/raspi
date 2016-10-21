@@ -1,15 +1,15 @@
-from email.header import Header
-from email.mime.text import MIMEText
-from email.utils import parseaddr, formataddr
-import smtplib
 import datetime
-import requests
-# import socket
-import re
-import time
 import json
 import logging
 import os
+import re
+import smtplib
+import time
+from email.header import Header
+from email.mime.text import MIMEText
+from email.utils import parseaddr, formataddr
+
+import requests
 
 ip_cache = '/ip_cache.log'
 log_file = 'get_ip.log'
@@ -108,7 +108,7 @@ def get_ip_re():
         except requests.ConnectionError as e1:
             logger.error(e1)
             continue
-    return aa
+    return None
 
 
 if __name__ == "__main__":
@@ -119,6 +119,7 @@ if __name__ == "__main__":
     if is_connect():
         try:
             ip = get_ip_re()
+            # if ip == None
             logger.info('get ip: %s success.' % ip)
             if os.path.isfile(path + ip_cache):
                 with open(path + ip_cache, 'r') as f:
