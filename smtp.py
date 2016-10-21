@@ -104,7 +104,11 @@ def get_ip_re():
         try:
             r = requests.get(i, timeout=10)
             if r.status_code == 200:
-                return re.search(r'((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)', r.text).group()
+                ip = re.search(r'((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)', r.text).group()
+                if ip is not None:
+                    return ip
+                else:
+                    continue
         except requests.ConnectionError as e1:
             logger.error(e1)
             continue
@@ -119,7 +123,6 @@ if __name__ == "__main__":
     if is_connect():
         try:
             ip = get_ip_re()
-            # if ip == None
             logger.info('get ip: %s success.' % ip)
             if os.path.isfile(path + ip_cache):
                 with open(path + ip_cache, 'r') as f:
