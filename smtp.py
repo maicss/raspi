@@ -125,10 +125,11 @@ if __name__ == "__main__":
             ip = get_ip_re()
             logger.info('get ip: %s success.' % ip)
             if os.path.isfile(path + ip_cache):
-                with open(path + ip_cache, 'r') as f:
+                with open(path + ip_cache, 'rw') as f:
                     cached_ip = f.read()
                     if cached_ip != ip:
                         send_mail(ip)
+                        f.write(ip)
             else:
                 with open(path + ip_cache, 'w') as f:
                     f.write(ip)
