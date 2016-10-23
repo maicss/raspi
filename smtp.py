@@ -129,7 +129,9 @@ if __name__ == "__main__":
                     cached_ip = f.read()
                     if cached_ip != ip:
                         send_mail(ip)
+                        f.seek(0)
                         f.write(ip)
+                        f.truncate()
             else:
                 with open(path + ip_cache, 'w') as f:
                     f.write(ip)
