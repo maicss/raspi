@@ -32,7 +32,7 @@ def _format_addr(s):
 
 def send_mail(outer_ip):
     from_addr = 'maicss_mk@163.com'
-    password = 'abc112234'
+    password = 'xxxxxx'
     to_addr = 'maicss@foxmail.com'
     smtp_server = 'smtp.163.com'
     
