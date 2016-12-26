@@ -2,6 +2,7 @@
 import os
 import pickle
 import random
+import sys
 import time
 
 import requests
@@ -21,28 +22,28 @@ def down(urls):
                 print(" 耗时：" + str(int(time.time() - t0)))
             except Exception:
                 print(i["output_filename"] + ' 下载失败')
-                with open('zhenhuan-url-list.txt', 'rb') as f:
+                with open('le-url-cache', 'rb') as f:
                     f.write(pickle.dumps(urls))
             i['cached'] = True
             time.sleep(2)
 
 
-if os.path.isfile('zhenhuan-url-list.txt'):
-    with open('zhenhuan-url-list.txt', 'rb') as f:
+if os.path.isfile('le-url-cache'):
+    with open('le-url-cache', 'rb') as f:
         url_list = pickle.loads(f.read())
         down(url_list)
 
 else:
 
-    # if len(sys.argv) > 2:
-    #     print('只需要一个url参数')
-    # try:
-    #     assert isinstance(sys.argv[1], str)
-    # except (IndexError, AssertionError):
-    #     print('请给出第一集的页面地址后重试')
-    #     # print('请给出电视剧的原始提供商的展示页面后重试')
+    if len(sys.argv) > 3:
+        print('只需要一个url参数')
+    try:
+        assert isinstance(sys.argv[1], str)
+    except (IndexError, AssertionError):
+        print('请给出第一集的页面地址后重试')
+        # print('请给出电视剧的原始提供商的展示页面后重试')
 
-    serial_home_url = 'http://www.le.com/ptv/vplay/2167544.html'
+    serial_home_url = sys.argv[1]
 
 
     def get_all_video_urls():
@@ -87,7 +88,7 @@ else:
 
                  } for i in urls]
 
-    with open('zhenhuan-url-list.txt', 'wb') as f:
+    with open('le-url-cache', 'wb') as f:
         f.write(pickle.dumps(pick_urls))
 
     down(pick_urls)
